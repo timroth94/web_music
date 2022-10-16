@@ -59,7 +59,6 @@ const changeList = (item) => {
 
 //挂载获取歌单
 onMounted(() => {
-  // changeList(JSON.parse(localStorage.list))
   getuserlist()
 })
 

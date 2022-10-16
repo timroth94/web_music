@@ -3,6 +3,7 @@
     <router-view name="topbar" />
     <router-view name="main"></router-view>
     <router-view name="musiccontrol"></router-view>
+    <router-view name="login"></router-view>
   </div>
 </template>
 
