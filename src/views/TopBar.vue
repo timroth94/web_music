@@ -85,12 +85,6 @@
       :src="userinfo.Avatar"
       alt="头像"
     >
-    <!-- <button @click="check">登录</button> -->
-    <button @click="getcode">点击获取二维码</button>
-    <img
-      :src="tupian"
-      alt="二维码"
-    >
   </div>
 
 </template>
@@ -102,6 +96,7 @@ import qs from "qs"
 import { List, Search } from '@element-plus/icons-vue'
 import { useStore } from "vuex";
 import { timestamp } from '@antfu/utils';
+import { get } from 'lodash';
 const store = useStore()
 
 //初始化
@@ -131,38 +126,6 @@ const show = () => {
 //color
 const color = ref(computed(() => store.state.misc.color))
 
-
-//获取二维码并扫描登录
-const getcode = function () {
-  request.getunicode(qs.stringify({
-    timestamp: new Date().getTime()
-  })).then(res => {
-    console.log(res);
-    request.creatunicode(qs.stringify({
-      key: res.data.data.unikey,
-      qrimg: true,
-      timestamp: new Date().getTime()
-    })).then(res => {
-      console.log(res);
-      tupian.value = res.data.data.qrimg
-    });
-    const timer = setInterval(() => {
-      request.qrcodestatu(qs.stringify({
-        key: res.data.data.unikey,
-        timestamp: new Date().getTime()
-      })).then(res => {
-        if (res.data.code == 803) {
-          clearInterval(timer)
-          localStorage.cookie = JSON.stringify(res.data.cookie)
-        }
-        console.log(res);
-      }
-      )
-    }, 10000)
-  }
-  )
-}
-
 const tupian = ref('')
 //获取用户信息
 const getuserinfo = function () {
@@ -178,41 +141,9 @@ const getuserinfo = function () {
   })
 }
 
-//获取用户歌单
-// const getuserlist = function () {
-//   request.getuserlist(qs.stringify({
-//     uid: localStorage.userId,
-//     cookie: JSON.parse(localStorage.cookie)
-//   })).then(res => {
-//     console.log(res);
-//   })
-
-// }
-
-// 获取歌单详情
-// const getlistdetail = function () {
-//   request.getlistdetail(qs.stringify({
-//     id: 70215059,
-//     limit: 10,
-//     cookie: JSON.parse(localStorage.cookie)
-//   })).then(res => {
-//     console.log(res);
-//   })
-// }
-//获取歌曲Url
-// const geturl = function () {
-//   request.geturl(qs.stringify({
-//     id: 1408017141,
-//     cookie: JSON.parse(localStorage.cookie)
-//   })).then(res => {
-//   })
-// }
 
 onMounted(() => {
   getuserinfo()
-  // getuserlist()
-  // getlistdetail()
-  // geturl()
 });
 
 //初始化搜索列表
