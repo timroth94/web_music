@@ -36,7 +36,7 @@ const userList = ref([])
 //获取用户歌单
 const getuserlist = function () {
   request.getuserlist(qs.stringify({
-    uid: localStorage.userId,
+    uid: localStorage.userid,
     cookie: JSON.parse(localStorage.cookie)
   })).then(res => {
     userList.value = res.data.playlist

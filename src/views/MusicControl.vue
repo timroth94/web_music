@@ -9,7 +9,6 @@
     :class="[lyric_show ? 'up' : '']"
     style="position:absolute;top: 0;width: 100%;height: 100%;z-index: 4;
     background-color: gray;"
-    v-on:mousemove="ccc"
   >
     <div
       class="lyric"
@@ -74,7 +73,7 @@
     <source :src="playingListUrl">
   </audio>
   <!--播放进度条-->
-  <div class="music-control">
+  <div :class="[onModel ? 'music-control-focus' : 'music-control']">
     <!-- 进度条 -->
     <div class="slider-demo-block">
       <!--左侧时间-->
@@ -611,6 +610,50 @@ const deletesong = (item) => {
   z-index: 5;
 }
 
+
+.music-control-focus {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  bottom: -83px;
+  z-index: 5;
+}
+
+.music-control-focus:hover{
+  bottom: 0px;
+}
+
+.music-control-focus .slider-demo-block:nth-child(1) {
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  bottom: 0px;
+  width: 20%;
+  margin: 0px 0 25px;
+}
+
+.music-control-focus .slider-demo-block:nth-child(1),
+.volume {
+  display: flex;
+  left: 40%;
+  right: 40%;
+}
+
+.music-control-focus .slider-demo-block:nth-child(2) {
+  color: aliceblue;
+  display: flex;
+}
+
+.music-control-focus .slider-demo-block:nth-child(2) {
+  z-index: 3;
+  position: relative;
+  bottom: 0;
+  width: 30%;
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+
 .music-control .slider-demo-block:nth-child(1) {
   justify-content: space-around;
   align-items: center;
@@ -665,7 +708,7 @@ const deletesong = (item) => {
 .focusModel {
   position: absolute;
   top: 50%;
-  left: 10%;
+  left: 5%;
   width: 500px;
   height: 500px;
   overflow: hidden;
@@ -690,7 +733,7 @@ const deletesong = (item) => {
 }
 
 .changefont {
-  font-size: 1em;
+  font-size: 20px;
 }
 
 .lyricstyle {
@@ -779,7 +822,7 @@ div :deep(.el-tooltip__trigger) {
   overflow: scroll;
   position: absolute;
   top: 300px;
-  right: 150px;
+  right: 100px;
 }
 .comment::-webkit-scrollbar {
   display: none;

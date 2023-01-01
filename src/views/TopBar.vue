@@ -79,6 +79,7 @@
       </div>
 
     </div>
+    <button @click="clear">退出登录</button>
     <img
       class="avatar"
       @click="show"
@@ -97,7 +98,9 @@ import { List, Search } from '@element-plus/icons-vue'
 import { useStore } from "vuex";
 import { timestamp } from '@antfu/utils';
 import { get } from 'lodash';
+import {useRouter, useRoute} from 'vue-router'
 const store = useStore()
+const router = useRouter()
 
 //初始化
 const music = reactive({
@@ -111,6 +114,13 @@ const userinfo = reactive({
   follow: 0,
   followed: 0,
 })
+
+const clear = () => {
+  localStorage.cookie = '',
+  localStorage.userId = '',
+  router.push({path: '/Login'})
+}
+
 
 
 //测试
@@ -130,7 +140,7 @@ const tupian = ref('')
 //获取用户信息
 const getuserinfo = function () {
   request.getuserinfo(qs.stringify({
-    uid: localStorage.userId,
+    uid: localStorage.userid,
     cookie: JSON.parse(localStorage.cookie)
   })).then(res => {
     userinfo.Nickname = res.data.profile.nickname
